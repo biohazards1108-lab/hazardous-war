@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HazardousWar | Home</title>
+    <style>
+        /* Reuse the WoW Dark Theme we built */
+        :root { --wow-gold: #f8b700; --panel-bg: rgba(10, 10, 10, 0.95); }
+        body { background: #050505 url('https://worldofwarcraft.blizzard.com/static/images/layout/bg-body-tertiary.jpg') no-repeat center top fixed; background-size: cover; color: #ccc; font-family: 'Georgia', serif; margin: 0; }
+        .leadership-bar { background: linear-gradient(#2a2218, #000); border-bottom: var(--wow-gold) 2px solid; padding: 10px; text-align: center; color: var(--wow-gold); font-weight: bold; }
+        .master-container { display: grid; grid-template-columns: 280px 1fr 300px; gap: 20px; max-width: 1500px; margin: 20px auto; padding: 0 20px; }
+        .panel { background: var(--panel-bg); border: 2px solid #5a4a32; margin-bottom: 20px; }
+        .panel-header { background: #3c3022; padding: 10px; color: var(--wow-gold); font-size: 13px; text-transform: uppercase; border-bottom: 1px solid var(--wow-gold); }
+        .nav-link { display: block; padding: 10px; color: #ddd; text-decoration: none; border-bottom: 1px solid #222; }
+        .nav-link:hover { color: var(--wow-gold); background: rgba(248, 183, 0, 0.05); }
+        .btn-gold { background: linear-gradient(#f8b700, #8a6500); border: 1px solid #000; padding: 10px; width: 100%; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <header class="leadership-bar">
+        OWNERS: BIOHAZARDS1109 & DARKBISHOP1109
+    </header>
+
+    <div class="master-container">
+        <aside>
+            <div class="panel">
+                <div class="panel-header">Navigation</div>
+                <nav>
+                    <a href="index.html" class="nav-link">Home / News</a>
+                    <a href="dashboard.html" class="nav-link">Character Dashboard</a>
+                    <a href="players.html" class="nav-link">Active Players</a>
+                    <a href="donations.html" class="nav-link" style="color: #1eff00;">Support / Donate</a>
+                </nav>
+            </div>
+            <div class="panel">
+                <div class="panel-header">Player Services</div>
+                <nav>
+                    <a href="gear.html" class="nav-link">Request Custom Gear</a>
+                    <a href="bugs.html" class="nav-link">Submit Bug/Glitch</a>
+                    <a href="bullying.html" class="nav-link" style="color: #ff4400;">REPORT BULLYING</a>
+                </nav>
+            </div>
+        </aside>
+
+        <main>
+            <div class="panel">
+                <div class="panel-header">HazardousWar News</div>
+                <div class="panel-body" style="padding: 20px;">
+                    <h2 style="color: var(--wow-gold);">The Gates are Open!</h2>
+                    <p>Welcome to the official HazardousWar portal. Use the links on the left to manage your account or request gear.</p>
+                </div>
+            </div>
+        </main>
+
+        <aside>
+            <div class="panel">
+                <div class="panel-header">Account Login</div>
+                <div class="panel-body" style="padding: 15px;">
+                    <input type="text" placeholder="Username" style="width:100%; margin-bottom:10px; background:#000; border:1px solid #444; color:#fff; padding:8px;">
+                    <input type="password" placeholder="Password" style="width:100%; margin-bottom:10px; background:#000; border:1px solid #444; color:#fff; padding:8px;">
+                    <button class="btn-gold" onclick="window.location.href='dashboard.html'">LOGIN</button>
+                    <p style="text-align:center; font-size:12px; margin-top:15px;">
+                        <a href="register.html" style="color: var(--wow-gold);">No account? Register here!</a>
+                    </p>
+                </div>
+            </div>
+        </aside>
+    </div>
+</body>
+</html>

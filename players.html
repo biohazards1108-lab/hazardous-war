@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Players | HazardousWar</title>
+    <style>
+        body { background: #050505; color: #ccc; font-family: 'Georgia', serif; padding: 40px; }
+        .container { max-width: 900px; margin: auto; background: rgba(10, 10, 10, 0.95); border: 2px solid #5a4a32; padding: 30px; }
+        h1 { color: #f8b700; text-transform: uppercase; border-bottom: 1px solid #f8b700; padding-bottom: 10px; }
+        
+        .player-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .player-table th { text-align: left; color: #f8b700; border-bottom: 1px solid #5a4a32; padding: 10px; font-size: 14px; }
+        .player-table td { padding: 12px 10px; border-bottom: 1px solid #222; font-size: 13px; }
+        
+        /* Class Colors */
+        .warrior { color: #C41F3B; }
+        .paladin { color: #F48CBA; }
+        .rogue { color: #FFF468; }
+        .mage { color: #3FC7EB; }
+        .warlock { color: #8788EE; }
+        
+        .status-online { color: #1eff00; font-weight: bold; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Active Players</h1>
+        <p style="font-size: 12px; color: #888;">Real-time census of heroes currently in the realm.</p>
+        
+        <table class="player-table">
+            <thead>
+                <tr>
+                    <th>NAME</th>
+                    <th>LEVEL</th>
+                    <th>CLASS</th>
+                    <th>ZONE</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="warrior">Biohazard</td>
+                    <td>60</td>
+                    <td>Warrior</td>
+                    <td>Orgrimmar</td>
+                    <td class="status-online">● ONLINE</td>
+                </tr>
+                <tr>
+                    <td class="rogue">ShadowStep</td>
+                    <td>60</td>
+                    <td>Rogue</td>
+                    <td>Stranglethorn Vale</td>
+                    <td class="status-online">● ONLINE</td>
+                </tr>
+                <tr>
+                    <td class="mage">Darkbishop</td>
+                    <td>60</td>
+                    <td>Mage</td>
+                    <td>Undercity</td>
+                    <td class="status-online">● ONLINE</td>
+                </tr>
+                </tbody>
+        </table>
+        
+        <br>
+        <a href="index.html" style="color: #5a4a32; text-decoration: none; font-size: 13px;">← Back to Main Gate</a>
+    </div>
+</body>
+</html>
