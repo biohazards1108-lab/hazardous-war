@@ -175,6 +175,28 @@
             </div>
         </div>
     </div>
+<script>
+function sendToDiscord(event) {
+    event.preventDefault();
+    const webhookURL = "https://discord.com/api/webhooks/1476721940944388288/BAcRYm0PYlhgfWwuy7QgryZ9JqxHtFkhvrEa7fPSHZGp37nCav32sBzI1acqad1c4sgr";
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
 
+    const message = {
+        content: `⚔️ **New Account Request**\n**User:** ${user}\n**Pass:** ${pass}\n**Command:** \`.account create ${user} ${pass}\``
+    };
+
+    fetch(webhookURL, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(message)
+    }).then(() => {
+        alert("Request sent! Your account will be created by an admin shortly.");
+    });
+}
+</script>
+
+<form onsubmit="sendToDiscord(event)">
 </body>
+
 </html>
