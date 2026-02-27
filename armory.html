@@ -71,9 +71,12 @@
             padding: 20px;
         }
 
+        /* Modern Glass Effect on Cards */
         .item-card {
-            background: rgba(20, 30, 45, 0.6);
-            border: 1px solid #3c5a7a;
+            background: rgba(10, 20, 35, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 4px;
+            border: 1px solid rgba(0, 174, 255, 0.2);
             padding: 20px;
             text-align: center;
             transition: all 0.3s ease;
@@ -85,12 +88,10 @@
             box-shadow: 0 0 15px rgba(0, 174, 255, 0.1);
         }
 
-        /* HD ICON STYLING */
         .icon-container {
             width: 64px;
             height: 64px;
             margin: 0 auto 15px auto;
-            position: relative;
         }
 
         .item-icon {
@@ -98,20 +99,26 @@
             height: 100%;
             border: 2px solid #333;
             background: #000;
-            box-shadow: inset 0 0 10px #000;
         }
 
-        /* Rarity Glows */
-        .border-legendary { border-color: #ff8000 !important; box-shadow: 0 0 10px #ff8000; }
+        /* Rarity Text Colors */
+        .legendary { color: #ff8000; font-weight: bold; }
+        .epic { color: #a335ee; font-weight: bold; }
+        .rare { color: #0070dd; font-weight: bold; }
+
+        /* Rarity Glow Borders */
+        .border-legendary { border-color: #ff8000 !important; animation: legendary-glow 2s infinite alternate; }
         .border-epic { border-color: #a335ee !important; box-shadow: 0 0 10px #a335ee; }
         .border-rare { border-color: #0070dd !important; box-shadow: 0 0 10px #0070dd; }
 
-        .item-name { display: block; font-size: 18px; font-weight: bold; margin-bottom: 5px; height: 50px; }
-        .legendary { color: #ff8000; }
-        .epic { color: #a335ee; }
-        .rare { color: #0070dd; }
+        @keyframes legendary-glow {
+            from { box-shadow: 0 0 5px #ff8000; }
+            to { box-shadow: 0 0 20px #ff8000, 0 0 30px #ff4400; }
+        }
 
+        .item-name { display: block; font-size: 18px; margin-bottom: 5px; height: 50px; }
         .price-tag { color: #ffd100; font-weight: bold; font-size: 18px; margin: 15px 0; display: block; }
+        
         .buy-btn {
             background: linear-gradient(to bottom, #3c5a7a, #1a2a3a);
             border: 1px solid #00aeff;
@@ -120,6 +127,7 @@
             width: 100%;
             cursor: pointer;
             text-transform: uppercase;
+            transition: 0.2s;
         }
         .buy-btn:hover { background: #00aeff; color: #000; }
     </style>
@@ -138,7 +146,7 @@
     </div>
 
     <div class="controls">
-        <input type="text" id="searchBar" placeholder="Search..." onkeyup="filterItems()">
+        <input type="text" id="searchBar" placeholder="Search items..." onkeyup="filterItems()">
         <select id="categoryFilter" onchange="filterItems()">
             <option value="all">All Items</option>
             <option value="Weapon">Weapons</option>
@@ -170,78 +178,4 @@
             { id: 17, name: "X-51 Nether-Rocket", type: "Mount", rarity: "rare", price: "100 Gold", icon: "ability_mount_rocketmount" },
             { id: 18, name: "Filth-Encrusted Tooth", type: "Trinket", rarity: "rare", price: "15 Gold", icon: "inv_misc_bone_07" },
             { id: 19, name: "Thunderfury", type: "Weapon", rarity: "legendary", price: "150 Gold", icon: "inv_sword_39" },
-            { id: 20, name: "Purified Lunar Dust", type: "Trinket", rarity: "rare", price: "25 Gold", icon: "inv_misc_dust_01" }
-                        
-            
-            // Add more items here following the same icon pattern
-        ];
-
-        function filterItems() {
-            const searchTxt = document.getElementById('searchBar').value.toLowerCase();
-            const category = document.getElementById('categoryFilter').value;
-            const container = document.getElementById('item-database');
-            
-            const filtered = armoryItems.filter(item => {
-                const matchesSearch = item.name.toLowerCase().includes(searchTxt);
-                const matchesCategory = (category === 'all' || item.type === category);
-                return matchesSearch && matchesCategory;
-            });
-
-            container.innerHTML = filtered.map(item => `
-                <div class="item-card">
-                    <div class="icon-container">
-                        <img class="item-icon border-${item.rarity}" 
-                             src="https://wow.zamimg.com/images/wow/icons/large/${item.icon}.jpg" 
-                             alt="${item.name}">
-                    </div>
-                    <div class="item-name ${item.rarity}">${item.name}</div>
-                    <span class="item-type">${item.type}</span>
-                    <span class="price-tag">${item.price}</span>
-                    <button class="buy-btn" onclick="purchaseItem('${item.name}', '${item.price}')">Purchase</button>
-                </div>
-            `).join('');
-        }
-async function purchaseItem(itemName, price) {
-    // 1. Get the logged-in user (Assumes you store username in localStorage after login)
-    const username = localStorage.getItem('username') || "Guest_User"; 
-
-    // 2. Data to send to your backend/game bridge
-    const purchaseData = {
-        user: username,
-        item: itemName,
-        cost: price,
-        timestamp: new Date().toISOString()
-    };
-
-    // Confirm with the player
-    if (!confirm(`Confirm purchase of ${itemName} for ${price}?`)) return;
-
-    try {
-        // Send notification to your Discord Webhook (Existing logic)
-        await fetch("https://discord.com/api/webhooks/1476721940944388288/BAcRYm0PYlhgfWwuy7QgryZ9JqxHtFkhvrEa7fPSHZGp37nCav32sBzI1acqad1c4sgr", {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                content: `🛒 **New Purchase!** \n**Player:** ${username} \n**Item:** ${itemName} \n**Price:** ${price}`
-            })
-        });
-
-        // 3. INTEGRATION STEP: Send data to your Game Server API
-        // Replace 'YOUR_GAME_API_URL' with your actual server endpoint
-        /*
-        const response = await fetch('https://your-game-api.com/deliver-item', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(purchaseData)
-        });
-        */
-
-        alert(`Success! ${itemName} has been sent to ${username}'s in-game mailbox.`);
-    } catch (error) {
-        console.error("Purchase failed:", error);
-        alert("There was an error processing your purchase. Please try again.");
-    }
-}
-    </script>
-</body>
-</html>
+            { id: 20, name: "Purified Lunar Dust", type: "Trinket", rarity: "rare", price: "25 Gold", icon
