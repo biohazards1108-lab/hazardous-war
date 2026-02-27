@@ -7,10 +7,8 @@
     <style>
         /* Base Reset */
         * { box-sizing: border-box; }
-
         body {
             background-color: #050505;
-            /* Creates a deep, dark atmospheric background */
             background: radial-gradient(circle at center, #151a1e 0%, #000000 100%);
             margin: 0;
             display: flex;
@@ -52,7 +50,7 @@
         }
 
         .subtitle {
-            color: #ffd100; /* WoW Gold */
+            color: #ffd100;
             font-size: 11px;
             letter-spacing: 2px;
             margin-bottom: 35px;
@@ -143,30 +141,27 @@
 
     <div class="portal-box">
         <div class="portal-header"></div>
-        
         <div class="portal-content">
             <h1>Account</h1>
             <div class="subtitle">Join the Eternal Struggle</div>
-
-            <form action="create_account.php" method="POST">
-                
+            
+            <form onsubmit="sendToDiscord(event)">
                 <div class="input-group">
                     <label>Battle-Tag / Username</label>
-                    <input type="text" name="username" maxlength="16" required>
+                    <input type="text" id="username" name="username" maxlength="16" required>
                 </div>
-
+                
                 <div class="input-group">
                     <label>Communication Address</label>
-                    <input type="email" name="email" required>
+                    <input type="email" id="email" name="email" required>
                 </div>
 
                 <div class="input-group">
                     <label>Secret Passcode</label>
-                    <input type="password" name="password" required>
+                    <input type="password" id="password" name="password" required>
                 </div>
 
                 <button type="submit" class="btn-action">Create Account</button>
-                
             </form>
 
             <div class="portal-footer">
@@ -175,28 +170,29 @@
             </div>
         </div>
     </div>
-<script>
-function sendToDiscord(event) {
-    event.preventDefault();
-    const webhookURL = "https://discord.com/api/webhooks/1476721940944388288/BAcRYm0PYlhgfWwuy7QgryZ9JqxHtFkhvrEa7fPSHZGp37nCav32sBzI1acqad1c4sgr";
-    const user = document.getElementById('username').value;
-    const pass = document.getElementById('password').value;
 
-    const message = {
-        content: `⚔️ **New Account Request**\n**User:** ${user}\n**Pass:** ${pass}\n**Command:** \`.account create ${user} ${pass}\``
-    };
+    <script>
+        function sendToDiscord(event) {
+            event.preventDefault();
+            
+            // Your Webhook URL
+            const webhookURL = "https://discord.com/api/webhooks/1476721940944388288/BAcRYm0PYlhgfWwuy7QgryZ9JqxHtFkhvrEa7fPSHZGp37nCav32sBzI1acqad1c4sgr";
+            
+            // Getting the values by ID
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const email = document.getElementById('email').value;
 
-    fetch(webhookURL, {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(message)
-    }).then(() => {
-        alert("Request sent! Your account will be created by an admin shortly.");
-    });
-}
-</script>
+            const message = {
+                content: `⚔️ **New Account Request**\n**User:** ${user}\n**Email:** ${email}\n**Pass:** ${pass}\n**Command:** \`.account create ${user} ${pass}\``
+            };
 
-<form onsubmit="sendToDiscord(event)">
-</body>
-
-</html>
+            fetch(webhookURL, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(message)
+            })
+            .then(() => {
+                alert("Request sent! Your account will be created by an admin shortly.");
+            })
+            .catch(
