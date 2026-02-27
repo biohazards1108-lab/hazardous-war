@@ -3,218 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HazardousWar | Armory Shop</title>
+    <title>The Frozen Armory | Hazardous War</title>
     <style>
-        * { cursor: url('https://cur.cursors-4u.net/games/gam-4/gam388.cur'), auto !important; }
-        
-        :root {
-            --wow-gold: #f8b700;
-            --panel-bg: rgba(10, 10, 10, 0.95);
-            --border-color: #5a4a32;
-        }
-
         body {
-            background: #050505 url('https://worldofwarcraft.blizzard.com/static/images/layout/bg-body-tertiary.jpg') no-repeat center top fixed;
-            background-size: cover;
-            color: #ccc;
-            font-family: 'Georgia', serif;
+            background-color: #050a12;
+            background-image: radial-gradient(circle at center, #101a26 0%, #000 100%);
+            color: #d1e1f0;
+            font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
             margin: 0;
+            padding: 0;
         }
 
-        .header-bar {
-            background: linear-gradient(#2a2218, #000);
-            border-bottom: var(--wow-gold) 2px solid;
-            padding: 20px;
+        /* Nav Bar */
+        .nav-bar {
+            background: rgba(10, 20, 35, 0.95);
+            border-bottom: 2px solid #3c5a7a;
+            padding: 15px 0;
             text-align: center;
         }
 
-        .header-bar h1 {
-            margin: 0;
-            color: var(--wow-gold);
+        .nav-bar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-size: 24px;
         }
 
-        .container {
+        .shop-header {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .shop-header h1 {
+            font-size: 42px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            text-shadow: 0 0 15px #00aeff;
+            margin: 0;
+        }
+
+        /* Filter Section */
+        .controls {
             max-width: 1200px;
-            margin: 30px auto;
+            margin: 0 auto 30px auto;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
             padding: 0 20px;
         }
 
-        .shop-controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .search-input, .category-select {
-            background: #000;
-            border: 1px solid var(--wow-gold);
+        select, input {
+            background: #0a1118;
+            border: 1px solid #3c5a7a;
             color: #fff;
-            padding: 10px;
-            font-family: 'Georgia', serif;
+            padding: 10px 15px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
         }
 
-        .search-input { flex-grow: 1; }
+        select:focus, input:focus { border-color: #00aeff; }
 
-        .armory-grid {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        #item-database {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
         }
 
         .item-card {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-color);
+            background: rgba(20, 30, 45, 0.6);
+            border: 1px solid #3c5a7a;
             padding: 20px;
+            border-radius: 4px;
             text-align: center;
-            transition: 0.3s;
-            position: relative;
+            transition: all 0.3s ease;
         }
 
         .item-card:hover {
-            border-color: var(--wow-gold);
+            border-color: #00aeff;
             transform: translateY(-5px);
-            background: rgba(40, 30, 20, 0.95);
         }
 
-        .item-icon {
-            width: 56px;
-            height: 56px;
-            border: 2px solid #444;
-            margin-bottom: 15px;
-        }
+        .item-name { display: block; font-size: 18px; font-weight: bold; margin-bottom: 5px; height: 50px; }
+        .item-type { font-size: 11px; color: #888; text-transform: uppercase; margin-bottom: 15px; display: block; }
 
-        .item-name {
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
+        /* WoW Rarities */
+        .legendary { color: #ff8000; text-shadow: 0 0 10px rgba(255, 128, 0, 0.3); }
+        .epic { color: #a335ee; }
+        .rare { color: #0070dd; }
 
-        .item-price {
-            color: #1eff00;
-            font-size: 14px;
-            margin-bottom: 15px;
-            display: block;
-        }
+        .price-tag { color: #ffd100; font-weight: bold; font-size: 18px; display: block; margin-bottom: 15px; }
 
-        .btn-buy {
-            background: linear-gradient(#f8b700, #8a6500);
-            border: 1px solid #000;
-            padding: 8px 20px;
-            color: #000;
-            font-weight: bold;
-            text-transform: uppercase;
+        .buy-btn {
+            background: linear-gradient(to bottom, #3c5a7a, #1a2a3a);
+            border: 1px solid #00aeff;
+            color: white;
+            padding: 10px 25px;
             cursor: pointer;
+            text-transform: uppercase;
             width: 100%;
         }
 
-        .character-box {
-            background: rgba(255, 209, 0, 0.1);
-            border: 1px solid var(--wow-gold);
-            padding: 15px;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .nav-back {
-            color: var(--wow-gold);
-            text-decoration: none;
-            font-size: 14px;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        /* Quality Colors */
-        .legendary { color: #ff8000; border-color: #ff8000 !important; }
-        .epic { color: #a335ee; border-color: #a335ee !important; }
-        .rare { color: #0070dd; border-color: #0070dd !important; }
+        .buy-btn:hover { background: #00aeff; color: #000; }
     </style>
 </head>
 <body>
 
-<div class="header-bar">
-    <a href="index.html" class="nav-back">← Back to Homepage</a>
-    <h1>HazardousWar Armory</h1>
-</div>
+    <nav class="nav-bar">
+        <a href="index.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="armory.html" style="color:#00aeff;">Armory Shop</a>
+    </nav>
 
-<div class="container">
-    <div class="character-box">
-        <label for="charName">Target Character Name:</label>
-        <input type="text" id="charName" class="search-input" style="max-width: 300px; margin-left: 10px;" placeholder="Enter Name...">
-        <p style="font-size: 12px; margin-top: 10px; color: #888;">Items are sent via in-game mail to the character listed above.</p>
+    <div class="shop-header">
+        <h1>The Armory</h1>
+        <p style="color: #a3d8ff;">Select a category to browse our wares</p>
     </div>
 
-    <div class="shop-controls">
-        <input type="text" id="searchInput" class="search-input" placeholder="Search for items..." onkeyup="filterItems()">
-        <select id="catFilter" class="category-select" onchange="filterItems()">
-            <option value="all">All Categories</option>
-            <option value="weapon">Legendary Weapons</option>
-            <option value="mount">Rare Mounts</option>
-            <option value="utility">Utility & Bags</option>
-            <option value="fun">Fun & Cosmetics</option>
+    <div class="controls">
+        <input type="text" id="searchBar" placeholder="Search for item..." onkeyup="filterItems()">
+        <select id="categoryFilter" onchange="filterItems()">
+            <option value="all">Show Everything</option>
+            <option value="Weapon">Weapons</option>
+            <option value="Mount">Mounts</option>
+            <option value="Trinket">Trinkets</option>
+            <option value="Other">Other Items</option>
         </select>
     </div>
 
-    <div class="armory-grid" id="armoryGrid">
-        </div>
-</div>
+    <div class="container">
+        <div id="item-database"></div>
+    </div>
 
-<script>
-    const inventory = [
-        { name: "Thunderfury", price: 5000, icon: "inv_sword_39", type: "weapon", rarity: "legendary" },
-        { name: "Sulfuras, Hand of Ragnaros", price: 4500, icon: "inv_hammer_unique_lutan", type: "weapon", rarity: "legendary" },
-        { name: "Spectral Tiger", price: 2500, icon: "ability_mount_spectraltiger", type: "mount", rarity: "epic" },
-        { name: "Ashes of Al'ar", price: 3000, icon: "ability_mount_phoenix_mount", type: "mount", rarity: "legendary" },
-        { name: "Amani War Bear", price: 1500, icon: "ability_mount_warbear_low", type: "mount", rarity: "epic" },
-        { name: "Teebu's Blazing Longsword", price: 1800, icon: "inv_sword_11", type: "weapon", rarity: "epic" },
-        { name: "Quel'Serrar", price: 2000, icon: "inv_sword_41", type: "weapon", rarity: "epic" },
-        { name: "Staff of Jordan", price: 800, icon: "inv_staff_13", type: "weapon", rarity: "epic" },
-        { name: "36-Slot Soul-Bag", price: 300, icon: "inv_misc_bag_24", type: "utility", rarity: "rare" },
-        { name: "Portable Mailbox", price: 500, icon: "inv_letter_15", type: "utility", rarity: "rare" },
-        { name: "Field Repair Bot 74G", price: 500, icon: "inv_gizmo_01", type: "utility", rarity: "rare" },
-        { name: "1000 Gold Satchel", price: 200, icon: "inv_misc_coin_02", type: "utility", rarity: "rare" },
-        { name: "Orb of Deception", price: 400, icon: "inv_misc_orb_02", type: "fun", rarity: "rare" },
-        { name: "Super Simian Sphere", price: 600, icon: "inv_misc_orb_05", type: "fun", rarity: "rare" },
-        { name: "Savory Deviate Delight x100const inventory = [
-        // --- PREVIOUS ITEMS ---
-        { name: "Thunderfury", price: 5000, icon: "inv_sword_39", type: "weapon", rarity: "legendary" },
-        { name: "Sulfuras, Hand of Ragnaros", price: 4500, icon: "inv_hammer_unique_lutan", type: "weapon", rarity: "legendary" },
-        { name: "Spectral Tiger", price: 2500, icon: "ability_mount_spectraltiger", type: "mount", rarity: "epic" },
-        { name: "Ashes of Al'ar", price: 3000, icon: "ability_mount_phoenix_mount", type: "mount", rarity: "legendary" },
-        { name: "Amani War Bear", price: 1500, icon: "ability_mount_warbear_low", type: "mount", rarity: "epic" },
-        { name: "Teebu's Blazing Longsword", price: 1800, icon: "inv_sword_11", type: "weapon", rarity: "epic" },
-        { name: "Quel'Serrar", price: 2000, icon: "inv_sword_41", type: "weapon", rarity: "epic" },
-        { name: "Staff of Jordan", price: 800, icon: "inv_staff_13", type: "weapon", rarity: "epic" },
-        { name: "36-Slot Soul-Bag", price: 300, icon: "inv_misc_bag_24", type: "utility", rarity: "rare" },
-        { name: "Portable Mailbox", price: 500, icon: "inv_letter_15", type: "utility", rarity: "rare" },
-        { name: "Field Repair Bot 74G", price: 500, icon: "inv_gizmo_01", type: "utility", rarity: "rare" },
-        { name: "1000 Gold Satchel", price: 200, icon: "inv_misc_coin_02", type: "utility", rarity: "rare" },
-        { name: "Orb of Deception", price: 400, icon: "inv_misc_orb_02", type: "fun", rarity: "rare" },
-        { name: "Super Simian Sphere", price: 600, icon: "inv_misc_orb_05", type: "fun", rarity: "rare" },
-        { name: "Savory Deviate Delight x100", price: 100, icon: "inv_misc_food_51", type: "fun", rarity: "common" },
-        { name: "Tabard of the Void", price: 450, icon: "inv_shirt_purple_01", type: "fun", rarity: "rare" },
-        { name: "Skullflame Shield", price: 1200, icon: "inv_shield_01", type: "weapon", rarity: "epic" },
-        { name: "Chef's Hat", price: 250, icon: "inv_helmet_15", type: "fun", rarity: "rare" },
-        { name: "Warp Stalker Mount", price: 1100, icon: "ability_mount_warpstalker", type: "mount", rarity: "epic" },
-        { name: "Deathcharger's Reins", price: 1200, icon: "ability_mount_undeadhorse", type: "mount", rarity: "epic" },
+    <script>
+        const armoryItems = [
+            { id: 1, name: "Shadowmourne", type: "Weapon", rarity: "legendary", price: "100 Gold" },
+            { id: 2, name: "Invincible's Reins", type: "Mount", rarity: "epic", price: "75 Gold" },
+            { id: 3, name: "Glorenzelg, High-Blade of the Silver Hand", type: "Weapon", rarity: "epic", price: "50 Gold" },
+            { id: 4, name: "Deathbringer's Will", type: "Trinket", rarity: "epic", price: "40 Gold" },
+            { id: 5, name: "Val'anyr, Hammer of Ancient Kings", type: "Weapon", rarity: "legendary", price: "90 Gold" },
+            { id: 6, name: "Mimiron's Head", type: "Mount", rarity: "epic", price: "80 Gold" },
+            { id: 7, name: "Bloodfall", type: "Weapon", rarity: "epic", price: "45 Gold" },
+            { id: 8, name: "Oathbinder, Charge of the Ranger-General", type: "Weapon", rarity: "epic", price: "45 Gold" },
+            { id: 9, name: "Havoc's Call, Blade of Lordaeron Kings", type: "Weapon", rarity: "epic", price: "40 Gold" },
+            { id: 10, name: "Heaven's Fall, Kryss of a Thousand Whispers", type: "Weapon", rarity: "epic", price: "40 Gold" },
+            { id: 11, name: "Archus, Greatstaff of Antonidas", type: "Weapon", rarity: "epic", price: "45 Gold" },
+            { id: 12, name: "Fal'inrush, Defender of Elven Kings", type: "Weapon", rarity: "epic", price: "45 Gold" },
+            { id: 13, name: "Phylactery of the Nameless Lich", type: "Trinket", rarity: "epic", price: "35 Gold" },
+            { id: 14, name: "Dislodged Foreign Object", type: "Trinket", rarity: "epic", price: "35 Gold" },
+            { id: 15, name: "Sindragosa's Flawless Fang", type: "Trinket", rarity: "epic", price: "35 Gold" },
+            { id: 16, name: "Petrified Twilight Scale", type: "Trinket", rarity: "epic", price: "35 Gold" },
+            { id: 17, name: "Reins of the Crimson Deathcharger", type: "Mount", rarity: "epic", price: "60 Gold" },
+            { id: 18, name: "Big Love Rocket", type: "Mount", rarity: "epic", price: "70 Gold" },
+            { id: 19, name: "X-51 Nether-Rocket X-TREME", type: "Mount", rarity: "epic", price: "65 Gold" },
+            { id: 20, name: "Spectral Tiger", type: "Mount", rarity: "epic", price: "150 Gold" },
+            { id: 21, name: "Battered Hilt", type: "Other", rarity: "epic", price: "25 Gold" },
+            { id: 22, name: "Brutal Gladiator's Frost Wyrm", type: "Mount", rarity: "epic", price: "85 Gold" },
+            { id: 23, name: "Death's Choice", type: "Trinket", rarity: "epic", price: "30 Gold" },
+            { id: 24, name: "Solace of the Fallen", type: "Trinket", rarity: "epic", price: "30 Gold" },
+            { id: 25, name: "Frostwyrm Bone", type: "Other", rarity: "rare", price: "10 Gold" }
+        ];
 
-        // --- NEW 15 ITEMS ---
-        { name: "Warglaive of Azzinoth (Main)", price: 6000, icon: "inv_weapon_glave_01", type: "weapon", rarity: "legendary" },
-        { name: "Warglaive of Azzinoth (Off)", price: 6000, icon: "inv_weapon_glave_02", type: "weapon", rarity: "legendary" },
-        { name: "Raven Lord's Reins", price: 1800, icon: "ability_mount_raventusk", type: "mount", rarity: "epic" },
-        { name: "Mimiron's Head", price: 3500, icon: "inv_misc_enggizmos_03", type: "mount", rarity: "legendary" },
-        { name: "Tabard of Flame", price: 450, icon: "inv_shirt_red_01", type: "fun", rarity: "rare" },
-        { name: "Tabard of Frost", price: 450, icon: "inv_shirt_blue_01", type: "fun", rarity: "rare" },
-        { name: "Corrupted Ashbringer", price: 7500, icon: "inv_sword_112", type: "weapon", rarity: "legendary" },
-        { name: "The Hungering Cold", price: 2200, icon: "inv_sword_97", type: "weapon", rarity: "epic" },
-        { name: "Atiesh, Greatstaff of the Guardian", price: 7000, icon: "inv_staff_30", type: "weapon", rarity: "legendary" },
-        { name: "X-51 Nether-Rocket X-TREME", price: 2000, icon: "ability_mount_rocketmount", type: "mount", rarity: "epic" },
-        { name: "Reins of the Swift Spectral Tiger", price: 4000, icon: "ability_mount_spectraltiger", type: "mount", rarity: "legendary" },
-        { name: "Murloc Costume", price: 800, icon: "inv_misc_fish_04", type: "fun", rarity: "epic" },
-        { name: "Ogre Pinata", price: 150, icon: "inv_misc_toy_01", type: "fun", rarity: "common" },
-        { name: "Zulian Tiger", price: 1600, icon: "ability_mount_jungle-tiger", type: "mount", rarity: "epic" },
-        { name: "Carapace of Wendigo", price: 900, icon: "inv_chest_leather_01", type: "utility", rarity: "rare" }
-    
+        function filterItems() {
+            const searchTxt = document.getElementById('searchBar').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            const container = document.getElementById('item-database');
+            
+            const filtered = armoryItems.filter(item => {
+                const matchesSearch = item.name.toLowerCase().includes(searchTxt);
+                const matchesCategory = (category === 'all' || item.type === category);
+                return matchesSearch && matchesCategory;
+            });
+
+            container.innerHTML = filtered.map(item => `
+                <div class="item-card">
+                    <div class="item-name ${item.rarity}">${item.name}</div>
+                    <span class="item-type">${item.type}</span>
+                    <span class="price-tag">${item.price}</span>
+                    <button class="buy-btn" onclick="purchaseItem('${item.name}', '${item.price}')">Purchase</button>
+                </div>
+            `).join('');
+        }
+
+        function purchaseItem(itemName, price) {
+            const webhookURL = "https://discord.com/api/webhooks/1476721940944388288/BAcRYm0PYlhgfWwuy7QgryZ9JqxHtFkhvrEa7fPSHZGp37nCav32sBzI1acqad1c4sgr";
+            fetch(webhookURL, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: `🛒 **Purchase Request**\n**Item:** ${itemName}\n**Price:** ${price}` })
+            }).then(() => alert(`Request for ${itemName} sent!`));
+        }
+
+        // Load all items initially
+        filterItems();
+    </script>
+</body>
+</html>
