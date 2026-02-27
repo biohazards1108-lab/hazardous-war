@@ -145,7 +145,7 @@
             <h1>Account</h1>
             <div class="subtitle">Join the Eternal Struggle</div>
             
-            <form onsubmit="sendToDiscord(event)">
+            <form onsubmit="sendToDiscord(event); return false;">
                 <div class="input-group">
                     <label>Battle-Tag / Username</label>
                     <input type="text" id="username" name="username" maxlength="16" required>
@@ -196,3 +196,4 @@
                 alert("Request sent! Your account will be created by an admin shortly.");
             })
             .catch(
+
