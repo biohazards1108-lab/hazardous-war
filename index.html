@@ -5,173 +5,257 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HazardousWar | Home</title>
     <style>
+        /* Cursor and Global Styles */
         * { cursor: url('https://cur.cursors-4u.net/games/gam-4/gam388.cur'), auto !important; }
-        /* Reuse the WoW Dark Theme we built */
-        :root { --wow-gold: #f8b700; --panel-bg: rgba(10, 10, 10, 0.95); }
-        body { background: #050505 url('https://worldofwarcraft.blizzard.com/static/images/layout/bg-body-tertiary.jpg') no-repeat center top fixed; background-size: cover; color: #ccc; font-family: 'Georgia', serif; margin: 0; }
-        .leadership-bar { background: linear-gradient(#2a2218, #000); border-bottom: var(--wow-gold) 2px solid; padding: 10px; text-align: center; color: var(--wow-gold); font-weight: bold; }
-        .master-container { display: grid; grid-template-columns: 280px 1fr 300px; gap: 20px; max-width: 1500px; margin: 20px auto; padding: 0 20px; }
-        .panel { background: var(--panel-bg); border: 2px solid #5a4a32; margin-bottom: 20px; }
-        .panel-header { background: #3c3022; padding: 10px; color: var(--wow-gold); font-size: 13px; text-transform: uppercase; border-bottom: 1px solid var(--wow-gold); }
-        .nav-link { display: block; padding: 10px; color: #ddd; text-decoration: none; border-bottom: 1px solid #222; }
-        .nav-link:hover { color: var(--wow-gold); background: rgba(248, 183, 0, 0.05); }
-        .btn-gold { background: linear-gradient(#f8b700, #8a6500); border: 1px solid #000; padding: 10px; width: 100%; font-weight: bold; cursor: pointer; }
+        
+        :root {
+            --wow-gold: #f8b700;
+            --panel-bg: rgba(10, 10, 10, 0.95);
+            --border-color: #5a4a32;
+        }
+
+        body {
+            background: #050505 url('https://worldofwarcraft.blizzard.com/static/images/layout/bg-body-tertiary.jpg') no-repeat center top fixed;
+            background-size: cover;
+            color: #ccc;
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Top Bar */
+        .leadership-bar {
+            background: linear-gradient(#2a2218, #000);
+            border-bottom: var(--wow-gold) 2px solid;
+            padding: 12px;
+            text-align: center;
+            color: var(--wow-gold);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Layout Container */
+        .master-container {
+            display: grid;
+            grid-template-columns: 280px 1fr 300px;
+            gap: 20px;
+            max-width: 1600px;
+            margin: 25px auto;
+            padding: 0 20px;
+        }
+
+        /* Reusable Panel Style */
+        .panel {
+            background: var(--panel-bg);
+            border: 2px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+        }
+
+        .panel-header {
+            background: #3c3022;
+            padding: 10px 15px;
+            color: var(--wow-gold);
+            font-size: 13px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--wow-gold);
+        }
+
+        /* Navigation Links */
+        .nav-link {
+            display: block;
+            padding: 12px 15px;
+            color: #ddd;
+            text-decoration: none;
+            border-bottom: 1px solid #222;
+            transition: 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--wow-gold);
+            background: rgba(248, 183, 0, 0.08);
+            padding-left: 20px;
+        }
+
+        /* Tab System */
+        .tab-buttons {
+            display: flex;
+            background: #1a1a1a;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: #888;
+            padding: 15px;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            text-transform: uppercase;
+            font-size: 11px;
+            transition: 0.3s;
+        }
+
+        .tab-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .tab-btn.active {
+            color: var(--wow-gold);
+            background: rgba(248, 183, 0, 0.1);
+            border-bottom: 2px solid var(--wow-gold);
+        }
+
+        .tab-content { 
+            display: none; 
+            padding: 25px; 
+            animation: fadeIn 0.4s ease; 
+        }
+        
+        .tab-content.active { display: block; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Faction Colors */
+        .alliance { color: #0070dd; font-weight: bold; }
+        .horde { color: #c41f3b; font-weight: bold; }
+
+        /* Buttons */
+        .btn-gold {
+            background: linear-gradient(#f8b700, #8a6500);
+            border: 1px solid #000;
+            padding: 10px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+            color: #000;
+            text-transform: uppercase;
+        }
+        
+        .btn-gold:hover { filter: brightness(1.2); }
+
+        /* Mobile Fix */
+        @media (max-width: 1100px) {
+            .master-container { grid-template-columns: 1fr; }
+            .master-container aside:nth-child(3) { order: 2; } /* Login moves up on mobile */
+        }
     </style>
-    /* Tab Styling */
-.tab-container {
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid #46331a;
-    padding: 15px;
-}
-
-.tab-buttons {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #46331a;
-    padding-bottom: 10px;
-}
-
-.tab-btn {
-    background: #1a1a1a;
-    color: #ffd100;
-    border: 1px solid #f8b700;
-    padding: 8px 15px;
-    cursor: pointer;
-    font-family: 'Georgia', serif;
-    text-transform: uppercase;
-    font-size: 12px;
-}
-
-.tab-btn:hover, .tab-btn.active {
-    background: #f8b700;
-    color: #000;
-}
-
-.tab-content {
-    display: none;
-    animation: fadeIn 0.3s ease;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* Population Colors */
-.alliance { color: #0070dd; font-weight: bold; }
-.horde { color: #c41f3b; font-weight: bold; }
-    /* Mobile Fix: Stack columns on top of each other */
-@media (max-width: 800px) {
-    .master-container {
-        grid-template-columns: 1fr; /* Changes 3 columns to 1 */
-        padding: 10px;
-    }
-    
-    .master-container aside, .master-container main {
-        width: 100%;
-    }
-}
 </head>
 <body>
 
-    <header class="leadership-bar">
-        OWNERS: BIOHAZARDS1109 & DARKBISHOP1109
-    </header>
+<header class="leadership-bar">
+    Server Owners: Biohazards1109 & Darkbishop1109
+</header>
 
-    <div class="master-container">
-        <aside>
-            <div class="panel">
-                <div class="panel-header">Navigation</div>
-                <nav>
-                    <a href="index.html" class="nav-link">Home / News</a>
-                    <a href="dashboard.html" class="nav-link">Character Dashboard</a>
-                    <a href="players.html" class="nav-link">Active Players</a>
-                    <a href="donations.html" class="nav-link" style="color: #1eff00;">Support / Donate</a>
-                </nav>
-            </div>
-            <div class="panel">
-                <div class="panel-header">Player Services</div>
-                <nav>
-                    <a href="gear.html" class="nav-link">Request Custom Gear</a>
-                    <a href="bugs.html" class="nav-link">Submit Bug/Glitch</a>
-                    <a href="bullying.html" class="nav-link" style="color: #ff4400;">REPORT BULLYING</a>
-                </nav>
-            </div>
-        </aside>
+<div class="master-container">
+    <aside>
+        <div class="panel">
+            <div class="panel-header">Navigation</div>
+            <nav>
+                <a href="index.html" class="nav-link">Home / News</a>
+                <a href="dashboard.html" class="nav-link">Character Dashboard</a>
+                <a href="players.html" class="nav-link">Active Players</a>
+                <a href="donations.html" class="nav-link" style="color: #1eff00;">Support / Donate</a>
+            </nav>
+        </div>
+        <div class="panel">
+            <div class="panel-header">Player Services</div>
+            <nav>
+                <a href="gear.html" class="nav-link">Request Custom Gear</a>
+                <a href="bugs.html" class="nav-link">Submit Bug/Glitch</a>
+                <a href="bullying.html" class="nav-link" style="color: #ff4400;">REPORT BULLYING</a>
+            </nav>
+        </div>
+    </aside>
 
-        <main>
-            <div class="panel">
-                <div class="panel-header">HazardousWar News</div>
-                <div class="panel-body" style="padding: 20px;">
-                    <h2 style="color: var(--wow-gold);">The Gates are Open!</h2>
-                    <p>Welcome to the official HazardousWar portal. Use the links on the left to manage your account or request gear.</p>
+    <main class="panel">
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="openTab(event, 'News')">News</button>
+            <button class="tab-btn" onclick="openTab(event, 'Vote')">Vote</button>
+            <button class="tab-btn" onclick="openTab(event, 'Bounties')">Bounties</button>
+            <button class="tab-btn" onclick="openTab(event, 'Status')">Online Status</button>
+        </div>
+
+        <div id="News" class="tab-content active">
+            <h2 style="color: var(--wow-gold);">The Gates are Open!</h2>
+            <p>Welcome to the official <strong>HazardousWar</strong> portal. We are dedicated to providing the ultimate Classic WoW experience.</p>
+            <p>Use the tabs above to track player bounties or vote for the server to earn rewards!</p>
+        </div>
+
+        <div id="Vote" class="tab-content">
+    <h3>Support the Realm</h3>
+    <p>Help us grow! Voting grants you Vote Points, or you can donate to help with server costs.</p>
+    
+    <button class="btn-gold" style="width: auto; padding: 10px 40px; margin-bottom: 10px;">VOTE ON TOP100</button>
+    
+    <br>
+
+    <a href="" 
+       class="btn-gold" 
+       style="text-decoration:none; display:inline-block; text-align:center; width: auto; padding: 10px 40px; background: linear-gradient(#1eff00, #0a5a00); color: white; border: 1px solid #000;">
+       MAKE A DONATION
+    </a>
+</div>
+        </div>
+
+        <div id="Bounties" class="tab-content">
+            <h3>Wanted: Dead or Alive</h3>
+            <p>Collect rewards for defeating these high-profile targets:</p>
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 12px; border-bottom: 1px solid #222; background: rgba(255,255,255,0.02);">
+                    <span class="alliance">[Alliance] ArthasX</span> — Reward: <span style="color:gold;">500 Gold</span>
+                </li>
+                <li style="padding: 12px; border-bottom: 1px solid #222;">
+                    <span class="horde">[Horde] ThrallJr</span> — Reward: <span style="color:gold;">250 Gold</span>
+                </li>
+            </ul>
+        </div>
+
+        <div id="Status" class="tab-content">
+            <h3>Real-Time Population</h3>
+            <div style="display: flex; justify-content: space-around; text-align: center; margin-top: 20px;">
+                <div>
+                    <h4 class="alliance">ALLIANCE</h4>
+                    <span style="font-size: 24px;">14</span>
+                </div>
+                <div style="border-left: 1px solid #333; height: 50px;"></div>
+                <div>
+                    <h4 class="horde">HORDE</h4>
+                    <span style="font-size: 24px;">12</span>
                 </div>
             </div>
-        </main><main class="tab-container">
-    <div class="tab-buttons">
-        <button class="tab-btn active" onclick="openTab(event, 'Vote')">Vote Points</button>
-        <button class="tab-btn" onclick="openTab(event, 'Bounties')">Bounties</button>
-        <button class="tab-btn" onclick="event, openTab(event, 'Status')">Online Status</button>
-    </div>
+        </div>
+    </main>
 
-    <div id="Vote" class="tab-content active">
-        <h3>Support the Realm</h3>
-        <p>Vote daily to earn points for the vanity gear shop!</p>
-        <button class="btn-action">Vote on Top100</button>
-    </div>
-
-    <div id="Bounties" class="tab-content">
-        <h3>Wanted: Dead or Alive</h3>
-        <ul>
-            <li><span class="alliance">ArthasX</span> - 500 Gold</li>
-            <li><span class="horde">ThrallJr</span> - 250 Gold</li>
-        </ul>
-    </div>
-
-    <div id="Status" class="tab-content">
-        <h3>World Population</h3>
-        <p>Alliance Online: <span class="alliance">14</span></p>
-        <p>Horde Online: <span class="horde">12</span></p>
-    </div>
-</main>
+    <aside>
+        <div class="panel">
+            <div class="panel-header">Account Login</div>
+            <div style="padding: 20px;">
+                <input type="text" placeholder="Username" style="width:100%; margin-bottom:12px; background:#000; border:1px solid #444; color:#fff; padding:10px; box-sizing: border-box;">
+                <input type="password" placeholder="Password" style="width:100%; margin-bottom:12px; background:#000; border:1px solid #444; color:#fff; padding:10px; box-sizing: border-box;">
+                <button class="btn-gold" onclick="window.location.href='dashboard.html'">LOGIN</button>
+                <p style="text-align:center; font-size:12px; margin-top:20px;">
+                    <a href="register.html" style="color: var(--wow-gold); text-decoration: none; font-weight: bold;">Create New Account</a>
+                </p>
+            </div>
+        </div>
+    </aside>
+</div>
 
 <script>
-function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tab-content");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].classList.remove("active");
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
     }
-    tablinks = document.getElementsByClassName("tab-btn");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].classList.remove("active");
-    }
-    document.getElementById(tabName).classList.add("active");
-    evt.currentTarget.classList.add("active");
-}
 </script>
 
-        <aside>
-            <div class="panel">
-                <div class="panel-header">Account Login</div>
-                <div class="panel-body" style="padding: 15px;">
-                    <input type="text" placeholder="Username" style="width:100%; margin-bottom:10px; background:#000; border:1px solid #444; color:#fff; padding:8px;">
-                    <input type="password" placeholder="Password" style="width:100%; margin-bottom:10px; background:#000; border:1px solid #444; color:#fff; padding:8px;">
-                    <button class="btn-gold" onclick="window.location.href='dashboard.html'">LOGIN</button>
-                    <p style="text-align:center; font-size:12px; margin-top:15px;">
-                        <a href="register.html" style="color: var(--wow-gold);">No account? Register here!</a>
-                    </p>
-                </div>
-            </div>
-        </aside>
-    </div>
 </body>
-
 </html>
-
-
