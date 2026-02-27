@@ -158,43 +158,44 @@
             </div>
         </div>
     </div>
+    
+        <script>
+    function sendToDiscord(event) {
+        // Prevents the page from refreshing/removing your info
+        event.preventDefault();
 
-    <script>
-        function sendToDiscord(event) {
-            // Stops the page from refreshing/submitting to a server (Prevents 405)
-            event.preventDefault(); 
-            
-            const webhookURL = "https://discord.com/api/webhooks/1476721940944388288/BAcRYm0PYlhgfWwuy7QgryZ9JqxHtFkhvrEa7fPSHZGp37nCav32sBzI1acqad1c4sgr";
-            
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
-            const email = document.getElementById('email').value;
+        const webhookURL = "https://discord.com/api/webhooks/1476721940944388288/BAcRYm0PYlhgfWwuy7QgryZ9JqxHtFkhvrEa7fPSHZGp37nCav32sBzI1acqad1c4sgr";
 
-            const message = {
-                content: `⚔️ **New Account Request**\n**User:** ${user}\n**Email:** ${email}\n**Pass:** ${pass}\n**Command:** \`.account create ${user} ${pass}\``
-            };
+        const user = document.getElementById('username').value;
+        const pass = document.getElementById('password').value;
+        const email = document.getElementById('email').value;
 
-            fetch(webhookURL, {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(message)
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert("Account request sent successfully!");
-                    // Optional: redirect to a thank you page
-                    // window.location.href = "success.html";
-                } else {
-                    alert("Discord rejected the request. Check your Webhook URL.");
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                alert("Failed to connect to Discord.");
-            });
+        const message = {
+            content: `⚔️ **New Account Request**\n**User:** ${user}\n**Email:** ${email}\n**Pass:** ${pass}\n**Command:** \`.account create ${user} ${pass}\``
+        };
 
-            return false;
-        }
+        // This part was being skipped because of the misplaced bracket!
+        fetch(webhookURL, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(message)
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Account request sent successfully! Check Discord.");
+            } else {
+                alert("Discord rejected the request. Check your Webhook URL.");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Failed to connect to Discord.");
+        });
+
+        return false;
+    }
+</script>
     </script>
 </body>
 </html>
+
