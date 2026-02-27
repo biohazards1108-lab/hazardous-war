@@ -3,179 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Dashboard | WoW Portal</title>
+    <title>WotLK | Player Command Center</title>
     <style>
-        /* Global Styles */
+        /* WotLK Palette: Frozen Blue (#00aeff), Saronite Grey (#222), and Ice White (#f0f8ff) */
         body {
-            background-color: #0b0b0b; /* Deep abyss black */
-            background-image: radial-gradient(circle, #1a1a1a 0%, #050505 100%);
-            color: #e1e1e1;
-            font-family: 'Segoe UI', 'Georgia', serif;
+            background-color: #050a12;
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('https://images.blz-contentstack.com/v3/assets/blt3452e3b114fab0cd/blt72076046e7f8184c/629910d52579731057e62a4d/wotlk-classic-background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: #d1e1f0;
+            font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
             margin: 0;
-            padding: 20px;
+            padding: 40px 20px;
         }
 
-        /* The Main Container */
         .dashboard-container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
-            border: 2px solid #3d3327; /* Dark bronze border */
-            background: rgba(20, 20, 20, 0.95);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 100px rgba(0,0,0,0.5);
-            border-radius: 8px;
-            overflow: hidden;
+            background: rgba(10, 15, 25, 0.9);
+            border: 2px solid #3c5a7a;
+            box-shadow: 0 0 50px rgba(0, 174, 255, 0.2), inset 0 0 20px #000;
+            border-radius: 4px;
+            position: relative;
         }
 
-        /* Header / Navigation */
+        /* Metallic Frozen Header */
         .header {
-            background: linear-gradient(to bottom, #2a2a2a, #151515);
-            padding: 20px;
-            border-bottom: 2px solid #f8b700; /* Gold accent line */
+            background: linear-gradient(to bottom, #1a2a3a, #0a1118);
+            padding: 30px;
+            border-bottom: 3px solid #00aeff;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
         .header h1 {
             margin: 0;
-            font-size: 24px;
-            color: #f8b700;
+            font-size: 28px;
+            color: #fff;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px #000;
+            letter-spacing: 5px;
+            text-shadow: 0 0 10px #00aeff, 2px 2px #000;
         }
 
-        /* Stats Grid */
+        /* Server Status Badge */
+        .server-status {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #1eff00;
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: #1eff00;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Hero Stats Section */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            padding: 25px;
         }
 
         .stat-card {
-            background: #1c1c1c;
-            border: 1px solid #444;
-            padding: 15px;
-            border-radius: 4px;
+            background: linear-gradient(135deg, #16222e 0%, #0a1118 100%);
+            border: 1px solid #2d445a;
+            padding: 20px;
             text-align: center;
-            transition: transform 0.2s;
+            position: relative;
+            transition: all 0.3s ease;
         }
 
         .stat-card:hover {
-            border-color: #f8b700;
-            transform: translateY(-3px);
+            border-color: #00aeff;
+            box-shadow: 0 0 15px rgba(0, 174, 255, 0.3);
         }
 
         .stat-value {
             display: block;
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
             color: #fff;
+            text-shadow: 0 0 5px rgba(255,255,255,0.2);
         }
 
         .stat-label {
-            color: #888;
-            font-size: 12px;
+            color: #00aeff;
+            font-size: 11px;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px;
+            display: block;
         }
 
-        /* Character Table */
+        /* Character Table Styling */
         .content-section {
-            padding: 20px;
+            padding: 0 25px 40px 25px;
+        }
+
+        h2 {
+            color: #a3d8ff;
+            font-size: 18px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #2d445a;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background: #111;
+            background: rgba(0,0,0,0.3);
         }
 
         th {
             text-align: left;
-            background: #222;
-            color: #f8b700;
-            padding: 12px;
-            border-bottom: 1px solid #3d3327;
+            background: #1a2a3a;
+            color: #00aeff;
+            padding: 15px;
+            font-size: 12px;
+            text-transform: uppercase;
         }
 
         td {
-            padding: 12px;
-            border-bottom: 1px solid #222;
-        }
-
-        /* Rarity Colors */
-        .epic { color: #a335ee; text-shadow: 0 0 5px rgba(163, 53, 238, 0.3); }
-        .rare { color: #0070dd; }
-        .legendary { color: #ff8000; }
-
-        /* Back Button */
-        .btn-back {
-            text-decoration: none;
-            color: #aaa;
+            padding: 15px;
+            border-bottom: 1px solid #1a2a3a;
             font-size: 14px;
         }
 
-        .btn-back:hover { color: #f8b700; }
+        tr:hover {
+            background: rgba(0, 174, 255, 0.05);
+        }
+
+        /* WoW Rarity Colors */
+        .epic { color: #a335ee; }
+        .legendary { color: #ff8000; text-shadow: 0 0 8px rgba(255, 128, 0, 0.4); }
+        .rare { color: #0070dd; }
+        .artifact { color: #e6cc80; }
+
+        /* Action Buttons */
+        .btn-logout {
+            text-decoration: none;
+            color: #555;
+            font-size: 12px;
+            transition: color 0.3s;
+        }
+
+        .btn-logout:hover {
+            color: #ff4444;
+        }
+
+        .frost-btn {
+            background: linear-gradient(to bottom, #3c5a7a, #1a2a3a);
+            border: 1px solid #00aeff;
+            color: white;
+            padding: 8px 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .frost-btn:hover {
+            background: #00aeff;
+            color: #000;
+        }
     </style>
 </head>
 <body>
 
-<div class="dashboard-container">
-    <div class="header">
-        <h1>Player Command Center</h1>
-        <a href="index.html" class="btn-back">← Return to Home</a>
-    </div>
+    <div class="dashboard-container">
+        <div class="header">
+            <div>
+                <h1>Command Center</h1>
+                <span class="server-status">● Realm: Northrend - Online</span>
+            </div>
+            <a href="index.html" class="btn-logout">DISCONNECT</a>
+        </div>
 
-    <div class="stats-grid">
-        <div class="stat-card">
-            <span class="stat-label">Level</span>
-            <span class="stat-value">80</span>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-value">80</span>
+                <span class="stat-label">Hero Level</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value epic">264</span>
+                <span class="stat-label">Gear Score</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value artifact">15,400</span>
+                <span class="stat-label">Arena Rating</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" style="color: #ffd100;">64,200g</span>
+                <span class="stat-label">Vault Balance</span>
+            </div>
         </div>
-        <div class="stat-card">
-            <span class="stat-label">Item Level</span>
-            <span class="stat-value epic">615</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-label">Achievement Pts</span>
-            <span class="stat-value" style="color: #ffd100;">12,450</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-label">Gold</span>
-            <span class="stat-value">45,201g</span>
-        </div>
-    </div>
 
-    <div class="content-section">
-        <h2 style="color: #f8b700; border-bottom: 1px solid #3d3327; padding-bottom: 10px;">Recent Activity</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Event / Item</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="epic">Xal'atath's Bargain</td>
-                    <td>Mythic+ Reward</td>
-                    <td style="color: #1eff00;">Completed</td>
-                </tr>
-                <tr>
-                    <td class="legendary">Thori'dal, the Stars' Fury</td>
-                    <td>Legacy Loot</td>
-                    <td>Collected</td>
-                </tr>
-                <tr>
-                    <td class="rare">Dalaran Hearthstone</td>
-                    <td>Utility</td>
-                    <td>Ready</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="content-section">
+            <h2>Active Hero: <span style="color:#fff">Arthas_PvP</span></h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Achievement / Item</th>
+                        <th>Type</th>
+                        <th>Date Acquired</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="legendary">Shadowmourne</td>
+                        <td>Legendary Axe</td>
+                        <td>Feb 20, 2026</td>
+                        <td><button class="frost-btn">Inspect</button></td>
+                    </tr>
+                    <tr>
+                        <td class="epic">Invincible's Reins</td>
+                        <td>Epic Mount</td>
+                        <td>Jan 15, 2026</td>
+                        <td><button class="frost-btn">Inspect</button></td>
+                    </tr>
+                    <tr>
+                        <td class="rare">Frozen Halls Master</td>
+                        <td>Achievement</td>
+                        <td>Dec 05, 2025</td>
+                        <td><button class="frost-btn">Inspect</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
 </body>
 </html>
