@@ -178,4 +178,34 @@
             { id: 17, name: "X-51 Nether-Rocket", type: "Mount", rarity: "rare", price: "100 Gold", icon: "ability_mount_rocketmount" },
             { id: 18, name: "Filth-Encrusted Tooth", type: "Trinket", rarity: "rare", price: "15 Gold", icon: "inv_misc_bone_07" },
             { id: 19, name: "Thunderfury", type: "Weapon", rarity: "legendary", price: "150 Gold", icon: "inv_sword_39" },
-            { id: 20, name: "Purified Lunar Dust", type: "Trinket", rarity: "rare", price: "25 Gold", icon
+            { id: 20, name: "Purified Lunar Dust", type: "Trinket", rarity: "rare", price: "25 Gold", icon: "inv_misc_dust_01" }
+        ];
+
+        function filterItems() {
+            const searchTxt = document.getElementById('searchBar').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            const container = document.getElementById('item-database');
+            
+            const filtered = armoryItems.filter(item => {
+                const matchesSearch = item.name.toLowerCase().includes(searchTxt);
+                const matchesCategory = (category === 'all' || item.type === category);
+                return matchesSearch && matchesCategory;
+            });
+
+            container.innerHTML = filtered.map(item => `
+                <div class="item-card border-${item.rarity}">
+                    <div class="icon-container">
+                        <img class="item-icon" 
+                             src="https://wow.zamimg.com/images/wow/icons/large/${item.icon}.jpg" 
+                             alt="${item.name}">
+                    </div>
+                    <div class="item-name ${item.rarity}">${item.name}</div>
+                    <span class="item-type">${item.type}</span>
+                    <span class="price-tag">${item.price}</span>
+                    <button class="buy-btn" onclick="purchaseItem('${item.name}', '${item.price}')">Purchase</button>
+                </div>
+            `).join('');
+        }
+
+        // Call this at the very end to show the items on your screen
+        filterItems();
