@@ -5,54 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Frozen Armory | Hazardous War</title>
     <style>
-        body {
-            background-color: #050a12;
-            background-image: radial-gradient(circle at center, #101a26 0%, #000 100%);
-            color: #d1e1f0;
-            font-family: "Palatino Linotype", serif;
-            margin: 0;
-        }
-
+        body { background-color: #050a12; background-image: radial-gradient(circle at center, #101a26 0%, #000 100%); color: #d1e1f0; font-family: "Palatino Linotype", serif; margin: 0; }
         .nav-bar { background: rgba(10, 20, 35, 0.95); border-bottom: 2px solid #3c5a7a; padding: 15px; text-align: center; }
         .nav-bar a { color: #fff; text-decoration: none; margin: 0 20px; text-transform: uppercase; font-size: 13px; }
-
         .shop-header { text-align: center; padding: 40px; }
         .shop-header h1 { font-size: 42px; text-transform: uppercase; letter-spacing: 8px; text-shadow: 0 0 15px #00aeff; }
-
-        .controls { max-width: 1200px; margin: 0 auto 30px; display: flex; justify-content: center; gap: 20px; }
+        .controls { max-width: 1200px; margin: 0 auto 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
         input, select { background: #0a1118; border: 1px solid #3c5a7a; color: #fff; padding: 10px; }
-
         #item-database { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; padding: 20px; }
-
-        /* Item Cards & Effects */
         .item-card { background: rgba(20, 30, 45, 0.8); backdrop-filter: blur(8px); border: 1px solid #3c5a7a; padding: 20px; text-align: center; transition: 0.3s; }
         .item-card:hover { transform: translateY(-5px); border-color: #00aeff; }
-
         .border-legendary { border-color: #ff8000 !important; animation: glow 2s infinite alternate; }
         @keyframes glow { from { box-shadow: 0 0 5px #ff8000; } to { box-shadow: 0 0 20px #ff8000; } }
-
         .legendary { color: #ff8000; font-weight: bold; }
         .epic { color: #a335ee; font-weight: bold; }
         .rare { color: #0070dd; font-weight: bold; }
-
         .item-icon { width: 64px; height: 64px; border: 2px solid #333; margin-bottom: 10px; }
         .price-tag { color: #ffd100; font-weight: bold; font-size: 18px; display: block; margin: 10px 0; }
-        
         .buy-btn { background: linear-gradient(#3c5a7a, #1a2a3a); border: 1px solid #00aeff; color: white; width: 100%; padding: 10px; cursor: pointer; text-transform: uppercase; }
         .buy-btn:hover { background: #00aeff; color: black; }
     </style>
 </head>
 <body>
-
     <nav class="nav-bar">
         <a href="index.html">Home</a>
         <a href="armory.html" style="color:#00aeff;">Armory Shop</a>
     </nav>
-
     <div class="shop-header"><h1>The Armory</h1></div>
-
+    
     <div class="controls">
-        <input type="text" id="searchBar" placeholder="Search..." onkeyup="filterItems()">
+        <input type="text" id="charNameInput" placeholder="Enter Character Name..." value="">
+        <input type="text" id="searchBar" placeholder="Search Items..." onkeyup="filterItems()">
         <select id="categoryFilter" onchange="filterItems()">
             <option value="all">All Items</option>
             <option value="Weapon">Weapons</option>
@@ -65,33 +48,20 @@
 
     <script>
         const armoryItems = [
-            { id: 1, name: "Shadowmourne", type: "Weapon", rarity: "legendary", price: "100 Gold", icon: "inv_axe_113" },
-            { id: 2, name: "Invincible's Reins", type: "Mount", rarity: "epic", price: "75 Gold", icon: "ability_mount_undeadhorse" },
-            { id: 3, name: "Glorenzelg", type: "Weapon", rarity: "epic", price: "50 Gold", icon: "inv_sword_139" },
-            { id: 4, name: "Deathbringer's Will", type: "Trinket", rarity: "epic", price: "40 Gold", icon: "inv_trinket_icc_04" },
-            { id: 5, name: "Mimiron's Head", type: "Mount", rarity: "epic", price: "80 Gold", icon: "inv_misc_head_gnome_01" },
-            { id: 6, name: "Val'anyr", type: "Weapon", rarity: "legendary", price: "90 Gold", icon: "inv_mace_99" },
-            { id: 7, name: "Spectral Tiger", type: "Mount", rarity: "epic", price: "150 Gold", icon: "ability_mount_spectraltiger" },
-            { id: 8, name: "Bloodfall", type: "Weapon", rarity: "epic", price: "45 Gold", icon: "inv_polearm_21" },
-            { id: 9, name: "Death's Choice", type: "Trinket", rarity: "epic", price: "30 Gold", icon: "inv_trinket_not_03" },
-            { id: 10, name: "Frostmourne", type: "Weapon", rarity: "legendary", price: "200 Gold", icon: "weapon_sneaky_01" },
-            { id: 11, name: "Reins of the Onyxian Drake", type: "Mount", rarity: "epic", price: "60 Gold", icon: "ability_mount_drake_twilight" },
-            { id: 12, name: "Tiny Abomination in a Jar", type: "Trinket", rarity: "epic", price: "35 Gold", icon: "inv_misc_herb_07" },
-            { id: 13, name: "Sulfuras, Hand of Ragnaros", type: "Weapon", rarity: "legendary", price: "120 Gold", icon: "inv_hammer_unique_sulfuras" },
-            { id: 14, name: "Ashes of Al'ar", type: "Mount", rarity: "epic", price: "180 Gold", icon: "ability_mount_phoenix_mount" },
-            { id: 15, name: "Dislodged Foreign Object", type: "Trinket", rarity: "epic", price: "40 Gold", icon: "inv_misc_eye_01" },
-            { id: 16, name: "Bryntroll, the Bone Arbiter", type: "Weapon", rarity: "epic", price: "55 Gold", icon: "inv_axe_113" },
-            { id: 17, name: "X-51 Nether-Rocket", type: "Mount", rarity: "rare", price: "100 Gold", icon: "ability_mount_rocketmount" },
-            { id: 18, name: "Filth-Encrusted Tooth", type: "Trinket", rarity: "rare", price: "15 Gold", icon: "inv_misc_bone_07" },
-            { id: 19, name: "Thunderfury", type: "Weapon", rarity: "legendary", price: "150 Gold", icon: "inv_sword_39" },
-            { id: 20, name: "Purified Lunar Dust", type: "Trinket", rarity: "rare", price: "25 Gold", icon: "inv_misc_dust_01" }
+            { id: 49623, name: "Shadowmourne", type: "Weapon", rarity: "legendary", price: "100 Gold", icon: "inv_axe_113" },
+            { id: 50818, name: "Invincible's Reins", type: "Mount", rarity: "epic", price: "75 Gold", icon: "ability_mount_undeadhorse" },
+            { id: 50730, name: "Glorenzelg", type: "Weapon", rarity: "epic", price: "50 Gold", icon: "inv_sword_139" },
+            { id: 50362, name: "Deathbringer's Will", type: "Trinket", rarity: "epic", price: "40 Gold", icon: "inv_trinket_icc_04" },
+            { id: 45693, name: "Mimiron's Head", type: "Mount", rarity: "epic", price: "80 Gold", icon: "inv_misc_head_gnome_01" },
+            { id: 46017, name: "Val'anyr", type: "Weapon", rarity: "legendary", price: "90 Gold", icon: "inv_mace_99" },
+            { id: 49284, name: "Spectral Tiger", type: "Mount", rarity: "epic", price: "150 Gold", icon: "ability_mount_spectraltiger" }
+            // ... add more items here
         ];
 
         function filterItems() {
             const searchTxt = document.getElementById('searchBar').value.toLowerCase();
             const category = document.getElementById('categoryFilter').value;
             const container = document.getElementById('item-database');
-            
             const filtered = armoryItems.filter(item => {
                 const matchesSearch = item.name.toLowerCase().includes(searchTxt);
                 const matchesCategory = (category === 'all' || item.type === category);
@@ -103,33 +73,48 @@
                     <img class="item-icon" src="https://wow.zamimg.com/images/wow/icons/large/${item.icon}.jpg">
                     <div class="item-name ${item.rarity}">${item.name}</div>
                     <span class="price-tag">${item.price}</span>
-                    <button class="buy-btn" onclick="purchaseItem('${item.name}', '${item.price}')">Purchase</button>
+                    <button class="buy-btn" onclick="purchaseItem(${item.id}, '${item.name}')">Purchase</button>
                 </div>
             `).join('');
         }
 
-        async function purchaseItem(itemName, price) {
-            const charId = localStorage.getItem('character_id') || "1"; // Default for testing
-            if (!confirm(`Confirm purchase of ${itemName}?`)) return;
+        async function purchaseItem(itemId, itemName) {
+            const charName = document.getElementById('charNameInput').value.trim();
+            
+            if (!charName) {
+                alert("Please enter your Character Name first!");
+                return;
+            }
+
+            if (!confirm(`Confirm purchase of ${itemName} for character: ${charName}?`)) return;
 
             try {
-                // 1. Tell Python Backend
+                // 1. Send to your Python Backend (app.py)
                 const response = await fetch('http://127.0.0.1:5000/api/purchase', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ char_id: charId, item_name: itemName })
+                    body: JSON.stringify({ 
+                        character_name: charName, 
+                        item_id: itemId 
+                    })
                 });
 
-                // 2. Tell Discord
-                await fetch("https://discord.com/api/webhooks/1476721940944388288/BAcRYm0PYlhgfWwuy7QgryZ9JqxHtFkhvrEa7fPSHZGp37nCav32sBzI1acqad1c4sgr", {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ content: `🛒 **Purchase:** ${itemName} by Char ID: ${charId}` })
-                });
+                const data = await response.json();
 
-                alert("Success! Item delivered to your in-game mailbox.");
+                if (response.ok) {
+                    // 2. Log to Discord on success
+                    await fetch("https://discord.com/api/webhooks/1476721940944388288/BAcRYm0PYlhgfWwuy7QgryZ9JqxHtFkhvrEa7fPSHZGp37nCav32sBzI1acqad1c4sgr", {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ content: `🛒 **Purchase Successful:** ${itemName} (ID: ${itemId}) sent to **${charName}**` })
+                    });
+                    alert("Success! Check your in-game mailbox.");
+                } else {
+                    alert("Error: " + data.message);
+                }
+
             } catch (e) {
-                alert("Server offline. Ensure app.py is running!");
+                alert("Connection failed. Is your Python script (app.py) running?");
             }
         }
 
