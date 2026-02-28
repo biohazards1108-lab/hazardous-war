@@ -119,6 +119,28 @@
         }
 
         filterItems(); // Run on load
-    </script>
+    </script><div class="item-card">
+    <h3>Frostmourne</h3>
+    <p>Cost: 50 Voting Points</p>
+    <button onclick="buyWithPoints(1, 'CharacterName', 22691, 50)">Buy Now</button>
+</div>
+
+<script>
+function buyWithPoints(accId, charName, itemId, price) {
+    fetch('http://YOUR_SERVER_IP:5000/buy-with-points', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            account_id: accId,
+            character_name: charName,
+            item_id: itemId,
+            cost: price
+        })
+    })
+    .then(response => response.json())
+    .then(data => alert(data.message || data.error));
+}
+</script>
 </body>
 </html>
+
