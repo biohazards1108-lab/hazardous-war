@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head><script>
+    // Set this to 'online' or 'offline'
+    const serverStatus = 'offline'; 
+
+    window.onload = function() {
+        const badge = document.querySelector('.status-badge');
+        if (serverStatus === 'online') {
+            badge.style.background = '#004e1a';
+            badge.style.border = '1px solid #44ff44';
+            badge.style.color = '#44ff44';
+            badge.innerText = 'System Online';
+        }
+    };
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hazardous War | Deployment in Progress</title>
