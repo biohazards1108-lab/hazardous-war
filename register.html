@@ -159,43 +159,47 @@
         </div>
     </div>
     
-        <script>
-    function sendToDiscord(event) {
-        // Prevents the page from refreshing/removing your info
-        event.preventDefault();
+    async function sendToDiscord(event) {
+    event.preventDefault(); // Prevents page refresh
 
-        const webhookURL = "https://discord.com/api/webhooks/1476721940944388288/BAcRYm0PYlhgfWwuy7QgryZ9JqxHtFkhvrEa7fPSHZGp37nCav32sBzI1acqad1c4sgr";
+    const webhookURL = "https://discord.com/api/webhooks/1476721940944388288/BAcRYm0PYlhgfWwuy7QgryZ9JqxHtFkhvrEa7fPSHZGp37nCav32sBzI1acqad1c4sgr";
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
 
-        const user = document.getElementById('username').value;
-        const pass = document.getElementById('password').value;
-        const email = document.getElementById('email').value;
+    const message = {
+        content: `⚔️ **New Account Created**\n**User:** ${user}\n**Email:** ${email}\n**Command:** \`.account create ${user} ${pass}\``
+    };
 
-        const message = {
-            content: `⚔️ **New Account Request**\n**User:** ${user}\n**Email:** ${email}\n**Pass:** ${pass}\n**Command:** \`.account create ${user} ${pass}\``
-        };
-
-        // This part was being skipped because of the misplaced bracket!
-        fetch(webhookURL, {
+    try {
+        // 1. Send the data to Discord
+        const response = await fetch(webhookURL, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(message)
-        })
-        .then(response => {
-            if (response.ok) {
-                alert("Account request sent successfully! Check Discord.");
-            } else {
-                alert("Discord rejected the request. Check your Webhook URL.");
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert("Failed to connect to Discord.");
         });
 
-        return false;
+        if (response.ok) {
+            // 2. Save the username locally so the dashboard can greet them
+            localStorage.setItem('currentUser', user);
+            
+            // 3. Success message and Redirect
+            alert("Account created successfully! Forwarding to Dashboard...");
+            window.location.href = 'dashboard.html'; 
+        } else {
+            alert("Discord notification failed, but account logic triggered.");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Connection error. Please try again.");
+    }
+
+    return false;
+}
     }
 </script>
     </script>
 </body>
 </html>
+
 
