@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hazardous War | Deployment in Progress</title>
+    <style>
+        body {
+            background: #050a12 url('https://images.blz-contentstack.com/v3/assets/blt3452e3b114fab0cd/blt72076046e7f8184c/629910d52579731057e62a4d/wotlk-classic-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #d1e1f0;
+            font-family: "Palatino Linotype", serif;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 10, 18, 0.7);
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            padding: 40px;
+            border: 1px solid rgba(0, 174, 255, 0.3);
+            background: rgba(10, 15, 25, 0.9);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #00aeff;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 174, 255, 0.5);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #4e0000;
+            border: 1px solid #ff4444;
+            color: #ff4444;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #bdccdb;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0, 174, 255, 0.2);
+            border-top: 3px solid #00aeff;
+            border-radius: 50%;
+            margin: 30px auto;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .discord-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #5865F2;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .discord-btn:hover { background: #4752c4; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="content">
+        <div class="status-badge">System Offline</div>
+        <h1>Hazardous War</h1>
+        <p>The Frozen Throne is currently being reinforced. Our developers are finalizing the core engine and web protocols.</p>
+        
+        <div class="loader"></div>
+        
+        <p style="font-size: 0.9rem; font-style: italic;">Expected Deployment: Soon™</p>
+        
+        <a href="YOUR_DISCORD_INVITE_LINK" class="discord-btn">Join Discord for Updates</a>
+    </div>
+
+</body>
+</html>
