@@ -159,21 +159,23 @@
 </head>
 <body>
 
-    <nav class="nav-bar">
-        <a href="index.php" class="active">Home</a>
-        
-        <?php if(isset($_SESSION['account_id'])): ?>
-            <a href="dashboard.php">Dashboard</a>
-            <a href="gear.php">Vote Shop</a>
-            <a href="donations.php">Donate</a>
-            <a href="logout.php" style="color:#ff4444;">Logout</a>
-        <?php else: ?>
-            <a href="register.php">Register</a>
-            <a href="login.php">Login</a>
-        <?php endif; ?>
-        
-        <a href="players.php">Players</a>
-    </nav>
+   <nav class="nav-bar">
+    <a href="index.php">Home</a>
+    <a href="rules.php">Rules</a>
+    <a href="connection.php">How to Connect</a>
+    <a href="players.php">Online Players</a>
+    
+    <?php if(isset($_SESSION['account_id'])): ?>
+        <a href="dashboard.php" style="color: #00aeff;">My Account</a>
+        <a href="gear.php">Vote Shop</a>
+        <a href="donations.php">Donate</a>
+        <a href="bugs.php">Bugs</a>
+        <a href="logout.php" style="color: #ff4444;">Logout</a>
+    <?php else: ?>
+        <a href="login.php">Login</a>
+        <a href="register.php" style="border: 1px solid #00aeff; padding: 5px 10px;">Join Now</a>
+    <?php endif; ?>
+</nav>
 
     <section class="hero">
         <h1>Hazardous War</h1>
@@ -212,4 +214,5 @@
     </footer>
 
 </body>
+
 </html>
