@@ -2,39 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Custom Gear Request | HazardousWar</title>
+    <title>Gear Shop - Vote Rewards</title>
     <style>
-        body { background: #050505; color: #ccc; font-family: 'Georgia', serif; padding: 40px; }
-        .container { max-width: 800px; margin: auto; border: 2px solid #f8b700; background: rgba(15, 15, 15, 0.95); padding: 30px; }
-        h1 { color: #f8b700; text-transform: uppercase; }
-        .gear-preview { border: 1px dashed #5a4a32; padding: 15px; background: #111; margin-bottom: 20px; color: #a335ee; }
-        label { color: #f8b700; font-size: 12px; }
-        input, select, textarea { width: 100%; background: #000; border: 1px solid #5a4a32; color: #fff; padding: 10px; margin: 10px 0; }
-        .btn-submit { background: linear-gradient(#f8b700, #8a6500); color: #000; font-weight: bold; border: none; padding: 15px; cursor: pointer; width: 100%; }
+        body { font-family: sans-serif; background: #1a1a1a; color: white; padding: 50px; }
+        .item-card { background: #2a2a2a; border: 1px solid #f3ad1e; padding: 15px; width: 300px; border-radius: 10px; text-align: center; }
+        button { background: #f3ad1e; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 5px; }
+        button:hover { background: #ffc145; }
+        select { margin: 10px 0; padding: 5px; width: 80%; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Forge Your Legacy</h1>
-        <div class="gear-preview">Preview: [Epic Item of the High Overlord]</div>
-        
-        <form>
-            <label>CHARACTER NAME</label>
-            <input type="text" placeholder="Who receives the gear?">
-            
-            <label>ITEM CATEGORY</label>
-            <select>
-                <option>Legendary Weapon</option>
-                <option>Custom Trinket</option>
-                <option>Tier 4+ Cosmetic</option>
-            </select>
-            
-            <label>DESIRED STATS & PROC EFFECTS</label>
-            <textarea rows="5" placeholder="e.g. +50 Strength, 5% chance to cast Shadow Bolt on hit..."></textarea>
-            
-            <button type="button" class="btn-submit" onclick="alert('Request sent to Darkbishop1109 for review.')">SEND TO FORGE</button>
-        </form>
-        <p style="font-size: 11px; text-align: center;"><a href="index.html" style="color: #666;">Cancel Request</a></p>
+
+    <div class="item-card">
+        <h3>Super Sword</h3>
+        <p>Cost: 50 Voting Points</p>
+
+        <label>Deliver to:</label><br>
+        <select id="vote_char_select">
+            <option value="">-- Loading --</option>
+        </select><br>
+
+        <button onclick="buyItem(22691, 50)">Buy with Points</button>
     </div>
+
+<script>
+    const accountId = 1; // Set to logged-in user's ID
+
+    // Populate dropdown
+    fetch(`http://127.0.0.1:5000/get-characters/${accountId}`)
+        .then(res => res.json())
+        .then(data => {
+            const select = document.getElementById('vote_char_select');
+            select.innerHTML = '<option value="">-- Select --</option>';
+            data.forEach(name => {
+                select.innerHTML += `<option value="${name}">${name}</option>`;
+            });
+        });
+
+    function buyItem(itemId, cost) {
+        const charName = document.getElementById('vote_char_select').value;
+        if(!charName) return alert("Please select a character first!");
+
+        fetch('http://127.0.0.1:5000/buy-with-points', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                account_id: accountId,
+                character_name: charName,
+                item_id: itemId,
+                cost: cost
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.message) alert("Success! " + data.message);
+            else alert("Error: " + data.error);
+        })
+        .catch(err => alert("Bridge Offline. Is armory.py running?"));
+    }
+</script>
+
 </body>
 </html>
